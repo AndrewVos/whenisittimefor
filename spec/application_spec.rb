@@ -14,15 +14,9 @@ describe Application do
     end
 
      it "should show the time left formatted" do
-       DateTime.stub!(:now).and_return(DateTime.new(2009, 10, 10))
-       end_date = DateTime.new(2011, 6, 14)
-
+       Date.stub!(:today).and_return(DateTime.new(2011, 6, 1))
        get '/'
-
-       app.new do |erb_app|
-         expected_response_body = erb_app.erb(:index)
-         last_response.body.should include "5 minutes and 20 seconds"
-       end
+       last_response.body.should include "less than a month from now"
      end
   end
 end
