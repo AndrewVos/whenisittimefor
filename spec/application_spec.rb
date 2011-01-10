@@ -24,15 +24,30 @@ describe Application do
     end
   end
   context "POST /" do
-    it "sets the users cookie" do
-      post "/", { :date => "today" }
-      get "/"
-      expected_date = DateTime.new(Date.today.year, Date.today.month, Date.today.day)
-      last_request.cookies["date"].should == Chronic.parse("today").to_s
+    context "with a date" do
+      it "sets the users cookie" do
+        post '/', { :date => "today" }
+        get '/'
+        expected_date = DateTime.new(Date.today.year, Date.today.month, Date.today.day)
+        last_request.cookies["date"].should == Chronic.parse("today").to_s
+      end
+      it "should show the time left formatted" do
+        post '/', { :date => "today" }
+        last_response.body.should include "today"
+      end
     end
-    it "should show the time left formatted" do
-      post "/", { :date => "today" }
-      last_response.body.should include "today"
+    context "without a date" do
+      it "deletes the users cookie" do
+        post '/', { :date => "today" }
+        post '/'
+        get '/'
+        last_request.cookies["date"].should == nil
+      end
+      it "should show the date input form" do
+        post '/'
+        expected_response_body = app.new.erb :enter_date
+        last_response.body.should include expected_response_body
+      end
     end
   end
 end

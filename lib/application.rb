@@ -17,9 +17,14 @@ class Application < Sinatra::Base
   end
 
   post '/?' do
-    date = Chronic.parse(params[:date])
-    response.set_cookie "date", date.to_s
-    erb :index, :locals => {:time_left => get_time_left(Date.parse(date.to_s)) }
+    date = Chronic.parse(params[:date]) rescue nil
+    if date
+      response.set_cookie "date", date.to_s
+      erb :index, :locals => {:time_left => get_time_left(Date.parse(date.to_s)) }
+    else
+      response.delete_cookie "date"
+      erb :enter_date
+    end
   end
 
   def get_time_left(date)
