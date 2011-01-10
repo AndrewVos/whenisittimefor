@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $(".how_long_left").click(function(){
+  $(".title_text").click(function(){
     $("#delete_date").submit();
   });
 });
