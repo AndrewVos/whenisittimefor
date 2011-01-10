@@ -1,5 +1,8 @@
 $(document).ready(function(){
-  $(".title_text").click(function(){
+  $(".center").center();
+  $("#date").focus();
+
+  $("#title_text").click(function(){
     $("#delete_date").submit();
   });
 });
