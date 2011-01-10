@@ -8,15 +8,19 @@ describe Application do
   end
 
   context "GET /" do
-    it "should not 404" do
-      get "/"
-      last_response.ok?.should == true
+    context "cookie does not contain a date" do
+      it "should show the date input form" do
+        get '/'
+        expected_response_body = app.new.erb :enter_date
+        last_response.body.should include expected_response_body
+      end
     end
-
-    it "should show the time left formatted" do
-      Date.stub!(:today).and_return(DateTime.new(2011, 6, 1))
-      get '/'
-      last_response.body.should include "less than a month from now"
+    context "cookie contains a date" do
+      it "should show the time left formatted" do
+        set_cookie "date=#{Date.today + 1}"
+        get '/'
+        last_response.body.should include "tomorrow"
+      end
     end
   end
 end
