@@ -13,10 +13,10 @@ describe Application do
       last_response.ok?.should == true
     end
 
-     it "should show the time left formatted" do
-       Date.stub!(:today).and_return(DateTime.new(2011, 6, 1))
-       get '/'
-       last_response.body.should include "less than a month from now"
-     end
+    it "should show the time left formatted" do
+      Date.stub!(:today).and_return(DateTime.new(2011, 6, 1))
+      get '/'
+      last_response.body.should include "less than a month from now"
+    end
   end
 end
