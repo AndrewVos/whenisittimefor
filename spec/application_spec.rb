@@ -28,8 +28,8 @@ describe Application do
       it "sets the users cookie" do
         post '/', { :date => "today" }
         get '/'
-        expected_date = DateTime.new(Date.today.year, Date.today.month, Date.today.day)
-        last_request.cookies["date"].should == Chronic.parse("today").to_s
+        expected_cookie = Chronic.parse("today").to_date.to_s
+        last_request.cookies["date"].should == expected_cookie
       end
       it "should show the time left formatted" do
         post '/', { :date => "today" }
