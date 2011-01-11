@@ -10,7 +10,7 @@ class Application < Sinatra::Base
     date = Date.parse(date_string) rescue nil
 
     if date
-      erb :index, :locals => {:time_left => get_time_left(date) }
+      erb :index, :locals => {:time_left => date.casual }
     else
       erb :enter_date
     end
@@ -21,14 +21,10 @@ class Application < Sinatra::Base
     date = time.to_date rescue nil
     if date
       response.set_cookie "date", date.to_s
-      erb :index, :locals => {:time_left => get_time_left(date) }
+      erb :index, :locals => {:time_left => date.casual }
     else
       response.delete_cookie "date"
       erb :enter_date
     end
-  end
-
-  def get_time_left(date)
-    date.casual(:as => [:days, :weeks, :months, :years])
   end
 end
