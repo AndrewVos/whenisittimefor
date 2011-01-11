@@ -29,6 +29,6 @@ class Application < Sinatra::Base
   end
 
   def get_time_left(date)
-    date.casual(:as => [:days, :months])
+    date.casual(:as => [:days, :weeks, :months, :years])
   end
 end
