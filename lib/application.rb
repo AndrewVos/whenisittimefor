@@ -10,8 +10,7 @@ class Application < Sinatra::Base
     date = Date.parse(date_string) rescue nil
 
     if date
-      time_left = get_time_left(date)
-      erb :index, :locals => {:time_left => time_left }
+      erb :index, :locals => {:time_left => get_time_left(date) }
     else
       erb :enter_date
     end
@@ -19,8 +18,8 @@ class Application < Sinatra::Base
 
   post '/?' do
     time = Chronic.parse(params[:date]) rescue nil
-    if time
-      date = time.to_date
+    date = time.to_date rescue nil
+    if date
       response.set_cookie "date", date.to_s
       erb :index, :locals => {:time_left => get_time_left(date) }
     else
