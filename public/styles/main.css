@@ -1,10 +1,16 @@
 .center {
   font-size: 50pt;
+  height: 50pt;
+  padding: 0;
+  margin: 0;
+  position: absolute;
 }
+
 #title_text:hover {
   cursor: pointer;
   color: red;
 }
+
 #date {
   width: 80%;
   text-align: center;
