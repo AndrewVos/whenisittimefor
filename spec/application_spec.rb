@@ -25,14 +25,15 @@ describe Application do
   end
   context "POST /" do
     context "with a date" do
-      it "sets the users cookie" do
+      before :each do
         post '/', { :date => "today" }
+      end
+      it "sets the users cookie" do
         get '/'
         expected_cookie = Chronic.parse("today").to_date.to_s
         last_request.cookies["date"].should == expected_cookie
       end
       it "should show the time left formatted" do
-        post '/', { :date => "today" }
         last_response.body.should include "today"
       end
     end
